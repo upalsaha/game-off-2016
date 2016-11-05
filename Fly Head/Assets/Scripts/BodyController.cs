@@ -25,6 +25,10 @@ public class BodyController : MonoBehaviour {
 	int bodyResetCounter;
 	public int bodyResetCap;
 
+	bool inputBlocked;
+	int inputBlockCounter;
+	public int inputBlockCap;
+
 	Animator anim;
 
 	// Use this for initialization
@@ -34,11 +38,15 @@ public class BodyController : MonoBehaviour {
 
 		bodyReset = false;
 		bodyResetCounter = 0;
+
+		inputBlocked = false;
+		inputBlockCounter++;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.E) && bodyBeingControlled){
+		if(!inputBlocked && Input.GetKeyDown(KeyCode.E) && bodyBeingControlled){
+			inputBlocked = true;
 			anim.SetBool ("RemovingHead", true); 
 
 		    bodyBeingControlled = false;
@@ -85,6 +93,14 @@ public class BodyController : MonoBehaviour {
 			}
 		}
 
+		if(inputBlocked) {
+			inputBlockCounter++;
+			if(inputBlockCounter >= inputBlockCap) {
+				inputBlocked = false;
+				inputBlockCounter = 0;
+			}
+		}
+
 	}
 
 	void FixedUpdate() {
@@ -115,7 +131,8 @@ public class BodyController : MonoBehaviour {
 
 
 	void OnCollisionStay2D(Collision2D col) {
-		if(col.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.E)) {
+		if(!inputBlocked && col.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.E)) {
+			inputBlocked = true;
 			anim.SetBool("BodyFalling", false);
 			Destroy(col.gameObject);
 			gameObject.tag = "Player";
