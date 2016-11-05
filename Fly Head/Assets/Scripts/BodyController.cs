@@ -61,6 +61,7 @@ public class BodyController : MonoBehaviour {
 			    FlyHead.tag = "Player";
 
 			    anim.SetBool("RemovingHead", false);
+			    anim.SetBool("BodyFalling", true);
 			    headTimer = 0;
 
 			}
