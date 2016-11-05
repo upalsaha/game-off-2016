@@ -3,7 +3,7 @@ using System.Collections;
 
 public class FlyHeadController : MonoBehaviour {
 
-	public float ballSpeed = 100.0f;
+	public float ballSpeed;
 
 	// Use this for initialization
 	void Start () {

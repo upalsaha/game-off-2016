@@ -21,12 +21,19 @@ public class BodyController : MonoBehaviour {
 	int headTimer;
 	public int headTimerCap;
 
+	bool bodyReset;
+	int bodyResetCounter;
+	public int bodyResetCap;
+
 	Animator anim;
 
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
 		headTimer = 0;
+
+		bodyReset = false;
+		bodyResetCounter = 0;
 	}
 	
 	// Update is called once per frame
@@ -67,6 +74,17 @@ public class BodyController : MonoBehaviour {
 			}
 			
 		}
+
+
+		if(bodyReset) {
+			bodyResetCounter++;
+			if(bodyResetCounter >= bodyResetCap) {
+				bodyResetCounter = 0;
+				bodyBeingControlled = true;
+				bodyReset = false;
+			}
+		}
+
 	}
 
 	void FixedUpdate() {
@@ -96,9 +114,13 @@ public class BodyController : MonoBehaviour {
 	}
 
 
-	void OnCollisionEnter2D(Collision2D col) {
-		if(col.gameObject.tag == "Player")
-			Debug.Log("Hello");
+	void OnCollisionStay2D(Collision2D col) {
+		if(col.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.E)) {
+			anim.SetBool("BodyFalling", false);
+			Destroy(col.gameObject);
+			gameObject.tag = "Player";
+			bodyReset = true;
+		}
 	}
 
 
