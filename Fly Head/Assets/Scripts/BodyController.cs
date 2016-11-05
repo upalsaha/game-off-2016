@@ -137,6 +137,9 @@ public class BodyController : MonoBehaviour {
 			Destroy(col.gameObject);
 			gameObject.tag = "Player";
 			bodyReset = true;
+
+			GetComponent<BoxCollider2D>().enabled = true;
+			GetComponent<EdgeCollider2D>().enabled = false;
 		}
 	}
 
