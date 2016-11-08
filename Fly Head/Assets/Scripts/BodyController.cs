@@ -15,7 +15,7 @@ public class BodyController : MonoBehaviour {
 	public bool grounded = false;
 
 	public Transform groundCheck; 
-	float groundRadius = 0.25f;    
+	float groundRadius = 0.5f;    
 	public LayerMask whatIsGround;
 
 	int headTimer;
@@ -70,7 +70,7 @@ public class BodyController : MonoBehaviour {
 			    GetComponent<BoxCollider2D>().enabled = false;
 			    GetComponent<EdgeCollider2D>().enabled = true;
 
-			    Instantiate(FlyHead, new Vector2(transform.position.x + 0.25f, transform.position.y + 2.25f), Quaternion.identity);
+			    Instantiate(FlyHead, new Vector2(transform.position.x + 0.25f, transform.position.y + 7.75f), Quaternion.identity);
 
 			    gameObject.tag = "Untagged";
 			    FlyHead.tag = "Player";
