@@ -29,6 +29,9 @@ public class BodyController : MonoBehaviour {
 	int inputBlockCounter;
 	public int inputBlockCap;
 
+	public bool hasBeenActivated;
+
+
 	Animator anim;
 
 	// Use this for initialization
@@ -41,10 +44,14 @@ public class BodyController : MonoBehaviour {
 
 		inputBlocked = false;
 		inputBlockCounter++;
+
+		anim.SetBool("HasBeenActivated", hasBeenActivated);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+
 		if(!inputBlocked && Input.GetKeyDown(KeyCode.E) && bodyBeingControlled){
 			inputBlocked = true;
 			anim.SetBool ("RemovingHead", true); 
@@ -140,6 +147,11 @@ public class BodyController : MonoBehaviour {
 
 			GetComponent<BoxCollider2D>().enabled = true;
 			GetComponent<EdgeCollider2D>().enabled = false;
+
+			if(!hasBeenActivated) {
+				hasBeenActivated = true;
+				anim.SetBool("HasBeenActivated", hasBeenActivated);
+			}
 		}
 	}
 
