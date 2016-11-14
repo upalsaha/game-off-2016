@@ -32,13 +32,14 @@ public class FanController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if(col.gameObject.tag == "Player") {
+		if(col.gameObject.tag == "Player" && col.gameObject.name != "Body" && col.gameObject.name != "Body(Clone)") {
 			playerAffected = true;
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D col) {
-		if(col.gameObject.tag == "Player") {
+
+		if(col.gameObject.tag == "Player" && col.gameObject.name != "Body" && col.gameObject.name != "Body(Clone)") {
 			playerAffected = false;
 		}
 	}
