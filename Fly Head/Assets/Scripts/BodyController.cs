@@ -32,6 +32,13 @@ public class BodyController : MonoBehaviour {
 	public bool hasBeenActivated;
 
 
+	public GameObject Splatter;
+    public int splatterCap;
+    public int splatterInterval;
+	int splatterCount;
+	bool isSplattering;
+
+	System.Random rand;
 	Animator anim;
 
 	// Use this for initialization
@@ -46,10 +53,30 @@ public class BodyController : MonoBehaviour {
 		inputBlockCounter++;
 
 		anim.SetBool("HasBeenActivated", hasBeenActivated);
+
+		rand = new System.Random();
+
+		isSplattering = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		if(isSplattering) {
+
+			for(int i = 0; i < splatterInterval; i++) {
+				splatterCount++;
+				if(splatterCount < splatterCap) {
+					float splatterX = rand.Next(-8, 15);
+					float splatterY = rand.Next(-8, 15);
+
+					Instantiate(Splatter, new Vector2(transform.position.x + splatterX, transform.position.y + splatterY), Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)) );
+				} else {
+					splatterCount = 0;
+					isSplattering = false;	
+				}
+			}
+		}
 
 
 		if(!inputBlocked && Input.GetKeyDown(KeyCode.E) && bodyBeingControlled){
@@ -78,6 +105,8 @@ public class BodyController : MonoBehaviour {
 			    GetComponent<EdgeCollider2D>().enabled = true;
 
 			    Instantiate(FlyHead, new Vector2(transform.position.x + 0.25f, transform.position.y + 7.75f), Quaternion.identity);
+
+			    isSplattering = true;
 
 			    gameObject.tag = "Untagged";
 			    FlyHead.tag = "Player";
@@ -108,6 +137,7 @@ public class BodyController : MonoBehaviour {
 			}
 		}
 
+
 	}
 
 	void FixedUpdate() {
@@ -134,6 +164,7 @@ public class BodyController : MonoBehaviour {
 				Flip ();
 
 		}
+
 	}
 
 
