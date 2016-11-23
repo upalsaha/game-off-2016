@@ -11,13 +11,13 @@ public class HorizontalElevator : MonoBehaviour {
 
 	float initialX;
 	int waitCounter;
-	bool Extending;
-	bool Retracting;
-	bool Waiting;
+	public bool Extending;
+	public bool Retracting;
+	public bool Waiting;
 
 	// Use this for initialization
 	void Start () {
-		initialX = transform.position.x;
+		initialX = Elevator.transform.position.x;
 
 		Extending = false;
 		Retracting = false;
