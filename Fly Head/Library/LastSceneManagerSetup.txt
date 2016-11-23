@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Fan_Level1.unity
+- path: Assets/Scenes/Fan_Spike_Level1.unity
   isLoaded: 1
   isActive: 1

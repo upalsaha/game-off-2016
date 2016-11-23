@@ -67,6 +67,8 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\DestroyObject.cs" />
     <Compile Include="Assets\Scripts\ElevatorController.cs" />
+    <Compile Include="Assets\Scripts\ExitPipe.cs" />
+    <Compile Include="Assets\Scripts\ExitPressurePlate.cs" />
     <Compile Include="Assets\Scripts\FanController.cs" />
     <Compile Include="Assets\Scripts\FlyHeadController.cs" />
     <Compile Include="Assets\Scripts\HorizontalElevator.cs" />
