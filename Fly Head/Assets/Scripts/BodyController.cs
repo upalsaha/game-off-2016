@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class BodyController : MonoBehaviour {
 
@@ -38,6 +39,21 @@ public class BodyController : MonoBehaviour {
 	int splatterCount;
 	bool isSplattering;
 
+	public bool deadAF;
+
+	public GameObject DummyPlayer;
+
+	public Transform BloodDrop;
+	public float bloodForce;
+	public bool bloodDrops;
+    int bloodDropCounter;
+
+    int killTimer;
+    public int killTimerCap;
+
+
+    public Object thisLevel;
+
 	System.Random rand;
 	Animator anim;
 
@@ -57,18 +73,36 @@ public class BodyController : MonoBehaviour {
 		rand = new System.Random();
 
 		isSplattering = false;
+
+		deadAF = false;
+
+		bloodDrops = false;
+
+		bloodDropCounter = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		if(isSplattering) {
+		if(!bloodDrops)
+			anim.SetBool("DeadAF", deadAF);
+
+
+		if(isSplattering || deadAF) {
+
+			if(deadAF)
+				splatterInterval += 8;
 
 			for(int i = 0; i < splatterInterval; i++) {
 				splatterCount++;
 				if(splatterCount < splatterCap) {
 					float splatterX = rand.Next(-8, 15);
 					float splatterY = rand.Next(-8, 15);
+					if(deadAF) {
+						splatterY = -2;
+						splatterX = rand.Next(-5, 6);
+
+					}
 
 					Instantiate(Splatter, new Vector2(transform.position.x + splatterX, transform.position.y + splatterY), Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)) );
 				} else {
@@ -76,8 +110,30 @@ public class BodyController : MonoBehaviour {
 					isSplattering = false;	
 				}
 			}
+
+			if(deadAF) {
+				deadAF = false;
+				bloodDrops = true;
+				bodyBeingControlled = false;
+				gameObject.tag = "Untagged";
+				GameObject newDummy = (GameObject)Instantiate(DummyPlayer, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+				DummyPlayer = newDummy;
+			}
 		}
 
+		bloodDropCounter += 1;
+		if(bloodDrops && bloodDropCounter % 10 == 0) {
+			int xForce = rand.Next(-100, 100);
+			int xPos = rand.Next(-2, 3);
+			Transform TemporaryTransform = (Transform)Instantiate (BloodDrop, new Vector2 (DummyPlayer.transform.position.x + xPos, DummyPlayer.transform.position.y), Quaternion.identity);
+			TemporaryTransform.GetComponent<Rigidbody2D> ().AddForce (new Vector2 ((float)xForce, bloodForce));
+			TemporaryTransform.GetComponent<Rigidbody2D> ().AddTorque ((TemporaryTransform.GetComponent<Rigidbody2D> ().angularVelocity + 1) * 400, ForceMode2D.Force);
+			killTimer += 10;
+
+			if(killTimer >= killTimerCap) {
+				SceneManager.LoadScene(thisLevel.name);
+			}
+		}
 
 		if(!inputBlocked && Input.GetKeyDown(KeyCode.E) && bodyBeingControlled){
 			inputBlocked = true;
@@ -168,7 +224,7 @@ public class BodyController : MonoBehaviour {
 	}
 
 
-	void OnCollisionStay2D(Collision2D col) {
+	void OnTriggerStay2D(Collider2D col) {
 		if(!inputBlocked && col.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.E)) {
 			inputBlocked = true;
 			anim.SetBool("BodyFalling", false);

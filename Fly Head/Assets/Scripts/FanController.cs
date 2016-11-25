@@ -43,4 +43,11 @@ public class FanController : MonoBehaviour {
 			playerAffected = false;
 		}
 	}
+
+	void OnCollisionEnter2D(Collision2D col) {
+		if(col.gameObject.name == "Body" || col.gameObject.name == "Body(Clone)") {
+			if(!col.gameObject.GetComponent<BodyController>().bloodDrops)
+				col.gameObject.GetComponent<BodyController>().deadAF = true;
+		}
+	}
 }
