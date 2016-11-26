@@ -122,7 +122,7 @@ public class BodyController : MonoBehaviour {
 		}
 
 		bloodDropCounter += 1;
-		if(bloodDrops && bloodDropCounter % 10 == 0) {
+		if(bloodDrops && bloodDropCounter % 5 == 0) {
 			int xForce = rand.Next(-100, 100);
 			int xPos = rand.Next(-2, 3);
 			Transform TemporaryTransform = (Transform)Instantiate (BloodDrop, new Vector2 (DummyPlayer.transform.position.x + xPos, DummyPlayer.transform.position.y), Quaternion.identity);

@@ -23,7 +23,7 @@ public class BloodDrop : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D col) {
 
-		if(col.gameObject.tag == "Ground") {
+		if(col.gameObject.tag == "Ground" || col.gameObject.tag == "Fan") {
 			Instantiate(Splatter, new Vector2(transform.position.x, transform.position.y), Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)) );
 			Destroy(gameObject);
 		}	

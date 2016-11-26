@@ -22,7 +22,7 @@ public class SplatterScript : MonoBehaviour {
 
 			for(int i = 0; i < colliders.Length; i++) {
 				Collider2D col = colliders[i];
-				if(col.gameObject.tag == "Ground") {
+				if(col.gameObject.tag == "Ground" || col.gameObject.tag == "Fan") {
 					transform.parent = col.gameObject.transform;
 					parentFound = true;
 					break;
