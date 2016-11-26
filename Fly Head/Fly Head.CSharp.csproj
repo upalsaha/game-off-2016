@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\BloodDrop.cs" />
     <Compile Include="Assets\Scripts\BodyController.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\DeathBox.cs" />
     <Compile Include="Assets\Scripts\DestroyObject.cs" />
     <Compile Include="Assets\Scripts\ElevatorController.cs" />
     <Compile Include="Assets\Scripts\ExitPipe.cs" />
