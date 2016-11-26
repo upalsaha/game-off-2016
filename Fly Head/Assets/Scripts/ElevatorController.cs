@@ -7,6 +7,8 @@ public class ElevatorController : MonoBehaviour {
 	public float elevator_speed;
 	public float peakHeight;
 
+	public bool elevatorGoesDown;
+
 	bool goingUp;
 
 	// Use this for initialization
@@ -16,10 +18,19 @@ public class ElevatorController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(goingUp) {
-			Elevator.transform.position += new Vector3(0, elevator_speed, 0);
-			if(Elevator.transform.position.y >= peakHeight) {
-				goingUp = false;
+		if(!elevatorGoesDown) {
+			if(goingUp) {
+				Elevator.transform.position += new Vector3(0, elevator_speed, 0);
+				if(Elevator.transform.position.y >= peakHeight) {
+					goingUp = false;
+				}
+			}
+		} else {
+			if(goingUp) {
+				Elevator.transform.position -= new Vector3(0, elevator_speed, 0);
+				if(Elevator.transform.position.y <= peakHeight) {
+					goingUp = false;
+				}
 			}
 		}
 	}
