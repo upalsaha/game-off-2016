@@ -25,7 +25,7 @@ public class ElevatorController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if(col.gameObject.tag == "Player") {
+		if(col.gameObject.tag == "Player" && (col.gameObject.name == "FlyHead" || col.gameObject.name == "FlyHead(Clone)")) {
 			goingUp = true;
 		}
 	}

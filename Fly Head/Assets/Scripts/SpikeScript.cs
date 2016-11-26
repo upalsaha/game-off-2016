@@ -6,6 +6,8 @@ public class SpikeScript : MonoBehaviour {
 
 	public int killTimerCap;
 	public GameObject Splatter;
+
+	public Object thisLevel;
 	
 	bool playerDead;
 	int killTimer;
@@ -27,7 +29,7 @@ public class SpikeScript : MonoBehaviour {
 			if(killTimer < killTimerCap) {
 				killTimer++;
 			} else {
-				SceneManager.LoadScene("Fan_Spike_Level1");
+				SceneManager.LoadScene(thisLevel.name);
 			}
 		}
 	}
@@ -45,6 +47,10 @@ public class SpikeScript : MonoBehaviour {
 
    			col.gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
    			playerDead = true;
+
+   			if(col.gameObject.name == "Body" || col.gameObject.name == "Body(Clone)") {
+   				col.gameObject.GetComponent<BodyController>().bodyBeingControlled = false;
+   			}
    		}
 	}
 
