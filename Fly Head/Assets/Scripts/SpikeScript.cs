@@ -50,6 +50,7 @@ public class SpikeScript : MonoBehaviour {
 
    			if(col.gameObject.name == "Body" || col.gameObject.name == "Body(Clone)") {
    				col.gameObject.GetComponent<BodyController>().bodyBeingControlled = false;
+   				col.gameObject.GetComponent<BodyController>().deadAF = true;
    			}
    		}
 	}
