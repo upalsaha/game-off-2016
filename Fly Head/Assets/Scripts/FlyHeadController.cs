@@ -11,10 +11,16 @@ public class FlyHeadController : MonoBehaviour {
 	int splatterTimer;
 	bool splatter;
 
+	GameObject treadSwitch;
+
+
 	// Use this for initialization
 	void Start () {
 		splatterTimer = 0;
 		splatter = false;
+
+
+		treadSwitch = GameObject.Find("SwitchTreadmill");
 	}
 	
 	// Update is called once per frame
@@ -54,7 +60,13 @@ public class FlyHeadController : MonoBehaviour {
 		}
 
 		if(col.gameObject.tag == "Treadmill") {
-			gameObject.GetComponent<Rigidbody2D>().AddForce(Camera.main.transform.right * col.gameObject.GetComponent<Treadmill>().headTreadmillSpeed);
+			if(!treadSwitch.Equals(null)){
+				if(treadSwitch.GetComponent<TreadmillDirections>().switched) {
+					gameObject.GetComponent<Rigidbody2D>().AddForce(Camera.main.transform.right * -col.gameObject.GetComponent<Treadmill>().headTreadmillSpeed);
+				} else {
+					gameObject.GetComponent<Rigidbody2D>().AddForce(Camera.main.transform.right * col.gameObject.GetComponent<Treadmill>().headTreadmillSpeed);
+				}
+			}
 		}
 	}
 }

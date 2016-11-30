@@ -58,6 +58,9 @@ public class BodyController : MonoBehaviour {
     public PhysicsMaterial2D frictionMaterial;
     public PhysicsMaterial2D noFrictionMaterial;
 
+
+    GameObject treadSwitch;
+
     bool deadBodyOnTreadmill;
     GameObject Treadmill;
 
@@ -86,6 +89,8 @@ public class BodyController : MonoBehaviour {
 		bloodDrops = false;
 
 		bloodDropCounter = 0;
+
+		treadSwitch = GameObject.Find("SwitchTreadmill");
 	}
 	
 	// Update is called once per frame
@@ -231,7 +236,13 @@ public class BodyController : MonoBehaviour {
 		} else {
 			if(deadBodyOnTreadmill) {
 
-				transform.position += new Vector3(Treadmill.GetComponent<Treadmill>().bodyNotControlledSpeed, 0f, 0f);
+				if(!treadSwitch.Equals(null)){
+					if(treadSwitch.GetComponent<TreadmillDirections>().switched) {
+						transform.position -= new Vector3(Treadmill.GetComponent<Treadmill>().bodyNotControlledSpeed, 0f, 0f);
+					} else {
+						transform.position += new Vector3(Treadmill.GetComponent<Treadmill>().bodyNotControlledSpeed, 0f, 0f);
+					}
+				}
 			}
 		}
 
@@ -262,8 +273,13 @@ public class BodyController : MonoBehaviour {
 		
 		if(col.gameObject.tag == "Treadmill") {
 			if(bodyBeingControlled) {
-				
-				gameObject.GetComponent<Rigidbody2D>().AddForce(Camera.main.transform.right * col.gameObject.GetComponent<Treadmill>().bodyTreadmillSpeed);
+				if(!treadSwitch.Equals(null)){
+					if(treadSwitch.GetComponent<TreadmillDirections>().switched) {
+						gameObject.GetComponent<Rigidbody2D>().AddForce(Camera.main.transform.right * -col.gameObject.GetComponent<Treadmill>().bodyTreadmillSpeed);
+					} else {
+						gameObject.GetComponent<Rigidbody2D>().AddForce(Camera.main.transform.right * col.gameObject.GetComponent<Treadmill>().bodyTreadmillSpeed);
+					}
+				}
 			} else {
 				deadBodyOnTreadmill = true;
 				Treadmill = col.gameObject;

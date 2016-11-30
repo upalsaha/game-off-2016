@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Treadmill_Level1.unity
+- path: Assets/Scenes/Fan_Level2.unity
   isLoaded: 1
   isActive: 1
