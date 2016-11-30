@@ -52,5 +52,9 @@ public class FlyHeadController : MonoBehaviour {
 				splatter = false;
 			}
 		}
+
+		if(col.gameObject.tag == "Treadmill") {
+			gameObject.GetComponent<Rigidbody2D>().AddForce(Camera.main.transform.right * col.gameObject.GetComponent<Treadmill>().headTreadmillSpeed);
+		}
 	}
 }

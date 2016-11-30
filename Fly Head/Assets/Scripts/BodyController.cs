@@ -54,6 +54,13 @@ public class BodyController : MonoBehaviour {
 
     public Object thisLevel;
 
+
+    public PhysicsMaterial2D frictionMaterial;
+    public PhysicsMaterial2D noFrictionMaterial;
+
+    bool deadBodyOnTreadmill;
+    GameObject Treadmill;
+
 	System.Random rand;
 	Animator anim;
 
@@ -139,6 +146,7 @@ public class BodyController : MonoBehaviour {
 			inputBlocked = true;
 			anim.SetBool ("RemovingHead", true); 
 
+			GetComponent<BoxCollider2D>().sharedMaterial = frictionMaterial;
 		    bodyBeingControlled = false;
 
 		 }
@@ -157,8 +165,9 @@ public class BodyController : MonoBehaviour {
 
 			if(headTimer > headTimerCap) {
 
-			    GetComponent<BoxCollider2D>().enabled = false;
-			    GetComponent<EdgeCollider2D>().enabled = true;
+				GetComponent<BoxCollider2D>().size = new Vector2(5.036697f, 0.01789331f);
+				GetComponent<BoxCollider2D>().offset = new Vector2(-1.126648f, -2.462021f);
+				
 
 			    Instantiate(FlyHead, new Vector2(transform.position.x + 0.25f, transform.position.y + 7.75f), Quaternion.identity);
 
@@ -219,6 +228,11 @@ public class BodyController : MonoBehaviour {
 			else if (move < 0 && facingRight)
 				Flip ();
 
+		} else {
+			if(deadBodyOnTreadmill) {
+
+				transform.position += new Vector3(Treadmill.GetComponent<Treadmill>().bodyNotControlledSpeed, 0f, 0f);
+			}
 		}
 
 	}
@@ -232,14 +246,44 @@ public class BodyController : MonoBehaviour {
 			gameObject.tag = "Player";
 			bodyReset = true;
 
-			GetComponent<BoxCollider2D>().enabled = true;
-			GetComponent<EdgeCollider2D>().enabled = false;
+			GetComponent<BoxCollider2D>().size = new Vector2(2.642463f, 10.00139f);
+			GetComponent<BoxCollider2D>().offset = new Vector2(0.3936806f, 2.532787f);
+			GetComponent<BoxCollider2D>().sharedMaterial = noFrictionMaterial;
 
 			if(!hasBeenActivated) {
+				deadBodyOnTreadmill = false;
 				hasBeenActivated = true;
 				anim.SetBool("HasBeenActivated", hasBeenActivated);
 			}
 		}
+	}
+
+	void OnCollisionStay2D(Collision2D col) {
+		
+		if(col.gameObject.tag == "Treadmill") {
+			if(bodyBeingControlled) {
+				
+				gameObject.GetComponent<Rigidbody2D>().AddForce(Camera.main.transform.right * col.gameObject.GetComponent<Treadmill>().bodyTreadmillSpeed);
+			} else {
+				deadBodyOnTreadmill = true;
+				Treadmill = col.gameObject;
+
+				//BIGGEST HACK OF MY LIFE
+				if(anim.GetBool("RemovingHead")) {
+					transform.position += new Vector3(-2*Treadmill.GetComponent<Treadmill>().bodyNotControlledSpeed, 0f, 0f);
+				}
+			}
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D col) {
+		
+		if(col.gameObject.tag == "Treadmill") {
+			
+			deadBodyOnTreadmill = false;
+			
+		}
+
 	}
 
 

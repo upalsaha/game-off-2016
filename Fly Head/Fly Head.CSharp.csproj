@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\SpikeScript.cs" />
     <Compile Include="Assets\Scripts\SplatterScript.cs" />
     <Compile Include="Assets\Scripts\TitleController.cs" />
+    <Compile Include="Assets\Scripts\Treadmill.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Splatter.shader" />

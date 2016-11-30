@@ -15,6 +15,8 @@ public class HorizontalElevator : MonoBehaviour {
 	public bool Retracting;
 	public bool Waiting;
 
+	Animator anim;
+
 	// Use this for initialization
 	void Start () {
 		initialX = Elevator.transform.position.x;
@@ -23,6 +25,8 @@ public class HorizontalElevator : MonoBehaviour {
 		Retracting = false;
 		Waiting = false;
 		waitCounter = 0;
+
+		anim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -46,11 +50,13 @@ public class HorizontalElevator : MonoBehaviour {
 		if(Retracting && extendsLeft) {
 			Elevator.transform.position += new Vector3(elevator_speed, 0, 0);
 			if(Elevator.transform.position.x >= initialX) {
+				anim.SetBool("Down", false);
 				Retracting = false;
 			}
 		} else if(Retracting && !extendsLeft) {
 			Elevator.transform.position += new Vector3(-elevator_speed, 0, 0);
 			if(Elevator.transform.position.x <= initialX) {
+				anim.SetBool("Down", false);
 				Retracting = false;
 			}
 		}
@@ -69,7 +75,8 @@ public class HorizontalElevator : MonoBehaviour {
 
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if(col.gameObject.tag == "Player") {
+		if(col.gameObject.tag == "Player" && !Retracting) {
+			anim.SetBool("Down", true);
 			Extending = true;
 		}
 	}

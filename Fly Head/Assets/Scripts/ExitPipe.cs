@@ -21,4 +21,10 @@ public class ExitPipe : MonoBehaviour {
 			SceneManager.LoadScene(nextLevel.name);
 		}
 	}
+
+	void OnTriggerEnter2D(Collider2D col) {
+		if(col.gameObject.tag == "Player" && (col.gameObject.name == "FlyHead" || col.gameObject.name == "FlyHead(Clone)")) {
+			col.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+		}
+	}
 }
