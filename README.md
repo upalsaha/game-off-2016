@@ -9,6 +9,17 @@
   </sup>
 </div>
 
+## Flyhead
+
+Our submission for the Github Game-off is a 2D platformer about attaching and deattaching the head of a fly to bodies in order to complete levels.
+
+
+We were thinking in terms of "MODular" body parts that can be used together or separately, and you'll notice this theme throughout the currently 9 levels.
+
+You can download the game on Gamejolt here: http://gamejolt.com/games/flyhead/213891
+
+You should be able to play by simply unzipping Flyhead.zip into the directory of your choice and running Flyhead.exe
+
 ## The Challenge
 
 You have the entire month of November to create a game *loosely* based on the theme **hacking, modding and/or augmenting**.
