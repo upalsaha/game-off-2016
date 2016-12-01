@@ -10,6 +10,8 @@ public class DeathBox : MonoBehaviour {
 
 	public Object thisLevel;
 
+	public int currentLevel;
+
 	// Use this for initialization
 	void Start () {
 		killTimer = 0;
@@ -22,7 +24,7 @@ public class DeathBox : MonoBehaviour {
 			if(killTimer < killTimerCap) {
 				killTimer++;
 			} else {
-				SceneManager.LoadScene(thisLevel.name);
+				Application.LoadLevel(currentLevel);
 			}
 		}
 	}

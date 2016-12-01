@@ -8,6 +8,8 @@ public class SpikeScript : MonoBehaviour {
 	public GameObject Splatter;
 
 	public Object thisLevel;
+
+	public int currentLevel;
 	
 	bool playerDead;
 	int killTimer;
@@ -29,7 +31,7 @@ public class SpikeScript : MonoBehaviour {
 			if(killTimer < killTimerCap) {
 				killTimer++;
 			} else {
-				SceneManager.LoadScene(thisLevel.name);
+				Application.LoadLevel(currentLevel);
 			}
 		}
 	}

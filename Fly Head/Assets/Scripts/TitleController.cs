@@ -24,6 +24,7 @@ public class TitleController : MonoBehaviour {
         sprite = title.GetComponent<SpriteRenderer>();
 
         sceneTimer = 0;
+
     }
 
     void Update() {
@@ -38,7 +39,7 @@ public class TitleController : MonoBehaviour {
  		} else if (sceneTimer == 330) {
  			Instantiate(splatter, new Vector2(89.71f, 166.3f), Quaternion.identity);
  		} else if (sceneTimer == 420) {
- 			SceneManager.LoadScene(firstLevel.name);
+ 			Application.LoadLevel("scene1");
  		}
 
         float t = (Time.time - startTime) / duration;

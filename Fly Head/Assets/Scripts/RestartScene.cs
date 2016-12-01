@@ -7,6 +7,7 @@ public class RestartScene : MonoBehaviour {
 
 	public Object thisLevel;
 
+	public int currentLevel;
 
 	// Use this for initialization
 	void Start () {
@@ -16,7 +17,7 @@ public class RestartScene : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.R)) {
-			SceneManager.LoadScene(thisLevel.name);
+			Application.LoadLevel(currentLevel);
 		}
 	}
 }

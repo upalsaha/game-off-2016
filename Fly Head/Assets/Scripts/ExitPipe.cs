@@ -6,6 +6,8 @@ public class ExitPipe : MonoBehaviour {
 
 	public Object nextLevel;
 
+	public int levelToLoad;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -18,7 +20,7 @@ public class ExitPipe : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D col) {
 		if(col.gameObject.tag == "Player") {
-			SceneManager.LoadScene(nextLevel.name);
+			Application.LoadLevel(levelToLoad);
 		}
 	}
 

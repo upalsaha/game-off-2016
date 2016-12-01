@@ -54,6 +54,8 @@ public class BodyController : MonoBehaviour {
 
     public Object thisLevel;
 
+    public int currentLevel;
+
 
     public PhysicsMaterial2D frictionMaterial;
     public PhysicsMaterial2D noFrictionMaterial;
@@ -143,7 +145,7 @@ public class BodyController : MonoBehaviour {
 			killTimer += 10;
 
 			if(killTimer >= killTimerCap) {
-				SceneManager.LoadScene(thisLevel.name);
+				Application.LoadLevel(currentLevel);
 			}
 		}
 
